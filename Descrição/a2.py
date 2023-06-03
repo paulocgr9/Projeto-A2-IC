@@ -1,5 +1,5 @@
 
-AUTORES = ['Nome Sobrenome', 'Nome Sobrenome']
+AUTORES = ['Pedro Santos Tokar', 'Paulo César Gomes Rodrigues']
 
 def questao_1():
     pass
