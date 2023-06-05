@@ -7,8 +7,10 @@ def questao_1(caminho):
     df = pd.read_csv(caminho)
     return df.shape[0]
 
-def questao_2():
-    pass
+def questao_2(caminho):
+    df = pd.read_csv(caminho)
+    casos_por_municipio = df["ID_MUNICIP"].value_counts()
+    return casos_por_municipio
 
 def questao_3():
     pass
