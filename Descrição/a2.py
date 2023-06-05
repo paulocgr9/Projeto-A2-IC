@@ -31,8 +31,9 @@ def questao_5(caminho):
         "32":"ES", "52":"GO", "21":"MA", "51":"MT", "50":"MS", "31":"MG", "15":"PA",
         "25":"PB", "41":"PR", "26":"PE", "22":"PI", "24":"RN", "43":"RS", "33":"RJ", 
         "11":"RO", "14":"RR", "42":"SC", "35":"SP", "28":"SE", "17":"TO"}
-    ).to_dict()
-    return estados_com_sigla
+    ).to_frame()
+    contagem_por_estado = estados_com_sigla.value_counts().to_dict()
+    return contagem_por_estado
 
 def questao_6():
     pass
