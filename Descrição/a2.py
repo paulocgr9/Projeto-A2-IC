@@ -44,9 +44,17 @@ def questao_5(caminho):
     contagem_por_estado = estados_com_sigla.value_counts().to_dict()
     return contagem_por_estado
 
-def questao_6():
-    print("ola")
-    pass
+def questao_6(caminho):
+    df = pd.read_csv(caminho)
+    df["SG_UF_NOT"] = df["SG_UF_NOT"].replace(
+        {12:"AC", 27:"AL", 16:"AP", 13:"AM", 29:"BA", 23:"CE", 53:"DF", 
+        32:"ES", 52:"GO", 21:"MA", 51:"MT", 50:"MS", 31:"MG", 15:"PA",
+        25:"PB", 41:"PR", 26:"PE", 22:"PI", 24:"RN", 43:"RS", 33:"RJ", 
+        11:"RO", 14:"RR", 42:"SC", 35:"SP", 28:"SE", 17:"TO"}
+    )
+    somente_homens = df[df["CS_SEXO"] == "M"]
+    quant_por_estado = somente_homens["SG_UF_NOT"].value_counts().to_dict()
+    return quant_por_estado
 
 def questao_7():
     pass
