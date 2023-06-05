@@ -51,8 +51,12 @@ def questao_6():
 def questao_7():
     pass
 
-def questao_8():
-    pass
+def questao_8(caminho):
+    df = pd.read_csv(caminho)
+    df["DT_NOTIFICACAO"] = pd.to_datetime(df["DT_NOTIFIC"])
+    df["DT_SINTOMAS"] = pd.to_datetime(df["DT_SIN_PRI"])
+    df["ATRASO_NOT"] = df["DT_NOTIFIC"].dt - df["DT_SIN_PRI"].dt
+    return df[["DT_NOTIFICACAO", "DT_SINTOMAS", "ATRASO_NOT"]]
 
 def questao_9():
     pass
