@@ -35,6 +35,7 @@ def questao_5(caminho):
     return estados_com_sigla
 
 def questao_6():
+    print("ola")
     pass
 
 def questao_7():
