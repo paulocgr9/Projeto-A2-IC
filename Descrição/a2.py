@@ -12,7 +12,7 @@ def questao_2(caminho):
     casos_por_municipio = df["ID_MUNICIP"].value_counts()
     return casos_por_municipio
 
-def questao_3():
+def questao_3(caminho):
     df = pd.read_csv(caminho)
     dicionario =  df["CS_SEXO"].value_counts().to_dict()
     if " " in dicionario.keys():
