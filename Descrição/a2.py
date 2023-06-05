@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as mp
+from pysus.preprocessing.decoders import decodifica_idade_SINAN
 
 AUTORES = ['Pedro Santos Tokar', 'Paulo César Gomes Rodrigues']
 
@@ -30,8 +31,11 @@ def questao_3(caminho):
     else:
         return "F", dicionario
 
-def questao_4():
-    pass
+def questao_4(caminho):
+    df = pd.read_csv(caminho)
+    df["IDADE_DECODIFICADA"] = decodifica_idade_SINAN(df.NU_IDADE_N, "Y")
+    media = df["IDADE_DECODIFICADA"].mean()
+    return(media)
 
 def questao_5(caminho):
     df = pd.read_csv(caminho)
