@@ -36,6 +36,7 @@ def questao_5(caminho):
     return contagem_por_estado
 
 def questao_6():
+    print("ola")
     pass
 
 def questao_7():
