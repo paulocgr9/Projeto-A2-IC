@@ -1,3 +1,5 @@
+import pandas as pd
+import matplotlib.pyplot as mp
 
 AUTORES = ['Pedro Santos Tokar', 'Paulo César Gomes Rodrigues']
 
@@ -9,7 +11,6 @@ def questao_2():
 
 def questao_3():
     pass
-
 
 def questao_4():
     pass
