@@ -19,7 +19,16 @@ def questao_3(caminho):
         del dicionario[" "]
     if "I" in dicionario.keys():
         del dicionario["I"]
-    return dicionario
+    if not ("M" in dicionario.keys()):
+        dicionario["M"] = 0
+    if not ("F" in dicionario.keys()):
+        dicionario["F"] = 0
+    if dicionario["M"] > dicionario["F"]:
+        return "M", dicionario
+    elif dicionario["F"] > dicionario["M"]:
+        return "F", dicionario
+    else:
+        return "F", dicionario
 
 def questao_4():
     pass
