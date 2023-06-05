@@ -3,8 +3,9 @@ import matplotlib.pyplot as mp
 
 AUTORES = ['Pedro Santos Tokar', 'Paulo César Gomes Rodrigues']
 
-def questao_1():
-    pass
+def questao_1(caminho):
+    df = pd.read_csv(caminho)
+    return df.shape[0]
 
 def questao_2():
     pass
