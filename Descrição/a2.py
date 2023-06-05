@@ -61,9 +61,10 @@ def questao_7():
 
 def questao_8(caminho):
     df = pd.read_csv(caminho)
+    df = df.astype({"DT_NOTIFIC": str, "DT_SIN_PRI": str})
     df["DT_NOTIFICACAO"] = pd.to_datetime(df["DT_NOTIFIC"])
     df["DT_SINTOMAS"] = pd.to_datetime(df["DT_SIN_PRI"])
-    df["ATRASO_NOT"] = df["DT_NOTIFIC"].dt - df["DT_SIN_PRI"].dt
+    df["ATRASO_NOT"] = (df["DT_NOTIFICACAO"] - df["DT_SINTOMAS"]).dt.days
     return df[["DT_NOTIFICACAO", "DT_SINTOMAS", "ATRASO_NOT"]]
 
 def questao_9():
