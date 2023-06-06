@@ -60,8 +60,29 @@ def questao_6(caminho):
     quant_por_estado = somente_homens["SG_UF_NOT"].value_counts().to_dict()
     return quant_por_estado
 
-def questao_7():
-    pass
+def questao_7(caminho):
+    df = pd.read_csv(caminho)
+    cidades_por_uf = {"AC":22, "AL":102, "AP":16, "AM":62, "BA":417, "CE":184,
+                      "DF":1, "ES":78, "GO":246, "MA":217, "MT":141, "MS":79,
+                      "MG":853, "PA":144, "PB":223, "PR":399, "PE":185,
+                      "PI":224, "RN":167, "RS":497, "RJ":91, "RO":52, "RR":15,
+                      "SC":295, "SP":645, "SE":75, "TO":139}
+    proporcao_por_uf = dict()
+    df["SG_UF_NOT"] = df["SG_UF_NOT"].replace(
+        {12:"AC", 27:"AL", 16:"AP", 13:"AM", 29:"BA", 23:"CE", 53:"DF",
+        32:"ES", 52:"GO", 21:"MA", 51:"MT", 50:"MS", 31:"MG", 15:"PA",
+        25:"PB", 41:"PR", 26:"PE", 22:"PI", 24:"RN", 43:"RS", 33:"RJ",
+        11:"RO", 14:"RR", 42:"SC", 35:"SP", 28:"SE", 17:"TO"}
+    )
+    combinacoes = df.groupby(["SG_UF_NOT", "ID_MUNICIP"]).size().to_frame().reset_index()
+    cidades_apareceram = combinacoes["SG_UF_NOT"].value_counts().to_frame().reset_index()
+    for estado in cidades_por_uf.keys():
+        linha = cidades_apareceram[cidades_apareceram["index"] == estado]
+        if linha.shape[0] == 0.0:
+            proporcao_por_uf[estado] = 0
+        else:
+            proporcao_por_uf[estado] = linha.iloc[0]["SG_UF_NOT"]/cidades_por_uf[estado]
+    return proporcao_por_uf
 
 def questao_8(caminho):
     df = pd.read_csv(caminho)
