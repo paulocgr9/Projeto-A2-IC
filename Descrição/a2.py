@@ -4,6 +4,13 @@ from pysus.preprocessing.decoders import decodifica_idade_SINAN
 
 AUTORES = ['Pedro Santos Tokar', 'Paulo César Gomes Rodrigues']
 
+dicionario_estados = {
+    12:"AC", 27:"AL", 16:"AP", 13:"AM", 29:"BA", 23:"CE", 53:"DF", 32:"ES",
+    52:"GO", 21:"MA", 51:"MT", 50:"MS", 31:"MG", 15:"PA", 25:"PB", 41:"PR",
+    26:"PE", 22:"PI", 24:"RN", 43:"RS", 33:"RJ", 11:"RO", 14:"RR", 42:"SC",
+    35:"SP", 28:"SE", 17:"TO"
+}
+
 def questao_1(caminho):
     df = pd.read_csv(caminho)
     return df.shape[0]
@@ -35,27 +42,17 @@ def questao_4(caminho):
     df = pd.read_csv(caminho)
     df["IDADE_DECODIFICADA"] = decodifica_idade_SINAN(df.NU_IDADE_N, "Y")
     media = df["IDADE_DECODIFICADA"].mean()
-    return(media)
+    return media
 
 def questao_5(caminho):
     df = pd.read_csv(caminho)
-    estados_com_sigla = df["SG_UF_NOT"].replace(
-        {12:"AC", 27:"AL", 16:"AP", 13:"AM", 29:"BA", 23:"CE", 53:"DF", 
-        32:"ES", 52:"GO", 21:"MA", 51:"MT", 50:"MS", 31:"MG", 15:"PA",
-        25:"PB", 41:"PR", 26:"PE", 22:"PI", 24:"RN", 43:"RS", 33:"RJ", 
-        11:"RO", 14:"RR", 42:"SC", 35:"SP", 28:"SE", 17:"TO"}
-    )
+    estados_com_sigla = df["SG_UF_NOT"].replace(dicionario_estados)
     contagem_por_estado = estados_com_sigla.value_counts().to_dict()
     return contagem_por_estado
 
 def questao_6(caminho):
     df = pd.read_csv(caminho)
-    df["SG_UF_NOT"] = df["SG_UF_NOT"].replace(
-        {12:"AC", 27:"AL", 16:"AP", 13:"AM", 29:"BA", 23:"CE", 53:"DF", 
-        32:"ES", 52:"GO", 21:"MA", 51:"MT", 50:"MS", 31:"MG", 15:"PA",
-        25:"PB", 41:"PR", 26:"PE", 22:"PI", 24:"RN", 43:"RS", 33:"RJ", 
-        11:"RO", 14:"RR", 42:"SC", 35:"SP", 28:"SE", 17:"TO"}
-    )
+    df["SG_UF_NOT"] = df["SG_UF_NOT"].replace(dicionario_estados)
     somente_homens = df[df["CS_SEXO"] == "M"]
     quant_por_estado = somente_homens["SG_UF_NOT"].value_counts().to_dict()
     return quant_por_estado
@@ -68,18 +65,13 @@ def questao_7(caminho):
                       "PI":224, "RN":167, "RS":497, "RJ":91, "RO":52, "RR":15,
                       "SC":295, "SP":645, "SE":75, "TO":139}
     proporcao_por_uf = dict()
-    df["SG_UF_NOT"] = df["SG_UF_NOT"].replace(
-        {12:"AC", 27:"AL", 16:"AP", 13:"AM", 29:"BA", 23:"CE", 53:"DF",
-        32:"ES", 52:"GO", 21:"MA", 51:"MT", 50:"MS", 31:"MG", 15:"PA",
-        25:"PB", 41:"PR", 26:"PE", 22:"PI", 24:"RN", 43:"RS", 33:"RJ",
-        11:"RO", 14:"RR", 42:"SC", 35:"SP", 28:"SE", 17:"TO"}
-    )
+    df["SG_UF_NOT"] = df["SG_UF_NOT"].replace(dicionario_estados)
     combinacoes = df.groupby(["SG_UF_NOT", "ID_MUNICIP"]).size().to_frame().reset_index()
     cidades_apareceram = combinacoes["SG_UF_NOT"].value_counts().to_frame().reset_index()
     for estado in cidades_por_uf.keys():
         linha = cidades_apareceram[cidades_apareceram["index"] == estado]
-        if linha.shape[0] == 0.0:
-            proporcao_por_uf[estado] = 0
+        if linha.shape[0] == 0:
+            proporcao_por_uf[estado] = 0.0
         else:
             proporcao_por_uf[estado] = linha.iloc[0]["SG_UF_NOT"]/cidades_por_uf[estado]
     return proporcao_por_uf
@@ -92,8 +84,22 @@ def questao_8(caminho):
     df["ATRASO_NOT"] = (df["DT_NOTIFICACAO"] - df["DT_SINTOMAS"]).dt.days
     return df[["DT_NOTIFICACAO", "DT_SINTOMAS", "ATRASO_NOT"]]
 
-def questao_9():
-    pass
+def questao_9(caminho):
+    df = pd.read_csv(caminho)
+    medias_e_desvios = dict()
+    df["SG_UF_NOT"] = df["SG_UF_NOT"].replace(dicionario_estados)
+    df = df.astype({"DT_NOTIFIC": str, "DT_SIN_PRI": str})
+    df["DT_NOTIFICACAO"] = pd.to_datetime(df["DT_NOTIFIC"])
+    df["DT_SINTOMAS"] = pd.to_datetime(df["DT_SIN_PRI"])
+    df["ATRASO_NOT"] = (df["DT_NOTIFICACAO"] - df["DT_SINTOMAS"]).dt.days
+    media_atrasos = df.groupby("SG_UF_NOT")["ATRASO_NOT"].mean().to_dict()
+    desvio_atrasos = df.groupby("SG_UF_NOT")["ATRASO_NOT"].std().to_dict()
+    for estado in dicionario_estados.values():
+        if estado in media_atrasos:
+            medias_e_desvios[estado] = (media_atrasos[estado], desvio_atrasos[estado])
+        else:
+            medias_e_desvios[estado] = (0, 0)
+    return medias_e_desvios
 
 def questao_10():
     pass
