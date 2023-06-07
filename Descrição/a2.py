@@ -67,13 +67,12 @@ def questao_7(caminho):
     proporcao_por_uf = dict()
     df["SG_UF_NOT"] = df["SG_UF_NOT"].replace(dicionario_estados)
     combinacoes = df.groupby(["SG_UF_NOT", "ID_MUNICIP"]).size().to_frame().reset_index()
-    cidades_apareceram = combinacoes["SG_UF_NOT"].value_counts().to_frame().reset_index()
+    cidades_apareceram = combinacoes["SG_UF_NOT"].value_counts().to_dict()
     for estado in cidades_por_uf.keys():
-        linha = cidades_apareceram[cidades_apareceram["index"] == estado]
-        if linha.shape[0] == 0:
-            proporcao_por_uf[estado] = 0.0
+        if estado in cidades_apareceram.keys():
+            proporcao_por_uf[estado] = cidades_apareceram[estado]/cidades_por_uf[estado]
         else:
-            proporcao_por_uf[estado] = linha.iloc[0]["SG_UF_NOT"]/cidades_por_uf[estado]
+            proporcao_por_uf[estado] = 0.0
     return proporcao_por_uf
 
 def questao_8(caminho):
@@ -103,3 +102,36 @@ def questao_9(caminho):
 
 def questao_10():
     pass
+
+
+
+
+
+
+teste = {'AC': 0.09090909090909091,
+ 'AL': 0.0196078431372549,
+ 'AP': 0.0625,
+ 'AM': 0.016129032258064516,
+ 'BA': 0.016786570743405275,
+ 'CE': 0.005434782608695652,
+ 'DF': 1.0,
+ 'ES': 0.038461538461538464,
+ 'GO': 0.008130081300813009,
+ 'MA': 0.009216589861751152,
+ 'MT': 0.014184397163120567,
+ 'MS': 0.02531645569620253,
+ 'MG': 0.017584994138335287,
+ 'PA': 0.034722222222222224,
+ 'PB': 0.004484304932735426,
+ 'PR': 0.047619047619047616,
+ 'PE': 0.005405405405405406,
+ 'PI': 0.004464285714285714,
+ 'RN': 0.011976047904191617,
+ 'RS': 0.018108651911468814,
+ 'RJ': 0.04395604395604396,
+ 'RO': 0.019230769230769232,
+ 'RR': 0.0,
+ 'SC': 0.010169491525423728,
+ 'SP': 0.043410852713178294,
+ 'SE': 0.013333333333333334,
+ 'TO': 0.02877697841726619}
