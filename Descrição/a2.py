@@ -110,6 +110,6 @@ def questao_10(caminho):
     media_atraso_mun_df = media_atraso_mun.to_frame().reset_index()
     casos_por_municipio = df["ID_MUNICIP"].value_counts().to_frame(name = "NUM_CASOS").rename_axis("ID_MUNICIP").reset_index()
     dataframe_plot = pd.merge(media_atraso_mun_df, casos_por_municipio, on = "ID_MUNICIP")
-    dataframe_plot.plot.scatter(x="NUM_CASOS", y="ATRASO_NOT")
+    dataframe_plot.plot.scatter(x="NUM_CASOS", y="ATRASO_NOT", title="Quantidade de Casos por Média de Atraso de Notificação por Município", xlabel="Númmero de Casos", ylabel = "Média de Atraso de Notificação", color="red")
     return media_atraso_mun
 
