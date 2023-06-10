@@ -101,7 +101,7 @@ def questao_9(caminho):
     return medias_e_desvios
 
 def questao_10(caminho):
-    df.read_csv(caminho)
+    df = pd.read_csv(caminho)
     df = df.astype({"DT_NOTIFIC": str, "DT_SIN_PRI": str})
     df["DT_NOTIFICACAO"] = pd.to_datetime(df["DT_NOTIFIC"])
     df["DT_SINTOMAS"] = pd.to_datetime(df["DT_SIN_PRI"])
