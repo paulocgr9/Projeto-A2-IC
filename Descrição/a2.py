@@ -100,6 +100,16 @@ def questao_9(caminho):
             medias_e_desvios[estado] = (0, 0)
     return medias_e_desvios
 
-def questao_10():
-    pass
+def questao_10(caminho):
+    df.read_csv(caminho)
+    df = df.astype({"DT_NOTIFIC": str, "DT_SIN_PRI": str})
+    df["DT_NOTIFICACAO"] = pd.to_datetime(df["DT_NOTIFIC"])
+    df["DT_SINTOMAS"] = pd.to_datetime(df["DT_SIN_PRI"])
+    df["ATRASO_NOT"] = (df["DT_NOTIFICACAO"] - df["DT_SINTOMAS"]).dt.days
+    media_atraso_mun = df.groupby(["ID_MUNICIP"])["ATRASO_NOT"].mean()
+    media_atraso_mun_df = media_atraso_mun.to_frame().reset_index()
+    casos_por_municipio = df["ID_MUNICIP"].value_counts().to_frame(name = "NUM_CASOS").rename_axis("ID_MUNICIP").reset_index()
+    dataframe_plot = pd.merge(media_atraso_mun_df, casos_por_municipio, on = "ID_MUNICIP")
+    dataframe_plot.plot.scatter(x="NUM_CASOS", y="ATRASO_NOT")
+    return media_atraso_mun
 
