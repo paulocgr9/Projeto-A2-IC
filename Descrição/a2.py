@@ -48,6 +48,9 @@ def questao_5(caminho = "chagas2018.csv"):
     df = pd.read_csv(caminho)
     estados_com_sigla = df["SG_UF_NOT"].replace(dicionario_estados)
     contagem_por_estado = estados_com_sigla.value_counts().to_dict()
+    for estado in dicionario_estados.values():
+        if estado not in contagem_por_estado.keys():
+            contagem_por_estado[estado] = 0
     return contagem_por_estado
 
 def questao_6(caminho = "chagas2018.csv"):
@@ -55,6 +58,9 @@ def questao_6(caminho = "chagas2018.csv"):
     df["SG_UF_NOT"] = df["SG_UF_NOT"].replace(dicionario_estados)
     somente_homens = df[df["CS_SEXO"] == "M"]
     quant_por_estado = somente_homens["SG_UF_NOT"].value_counts().to_dict()
+    for estado in dicionario_estados.values():
+        if estado not in quant_por_estado.keys():
+            quant_por_estado[estado] = 0
     return quant_por_estado
 
 def questao_7(caminho = "chagas2018.csv"):
