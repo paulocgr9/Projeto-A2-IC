@@ -83,7 +83,7 @@ def questao_7(caminho = "chagas2018.csv"):
 
 def questao_8(caminho = "chagas2018.csv"):
     df = pd.read_csv(caminho)
-    df = df.astype({"DT_NOTIFIC": str, "DT_SIN_PRI": str})
+    df = df.astype({"DT_NOTIFIC": str, "DT_SIN_PRI": str}).copy()
     df["DT_NOTIFICACAO"] = pd.to_datetime(df["DT_NOTIFIC"])
     df["DT_SINTOMAS"] = pd.to_datetime(df["DT_SIN_PRI"])
     df["ATRASO_NOT"] = (df["DT_NOTIFICACAO"] - df["DT_SINTOMAS"]).dt.days
@@ -93,7 +93,7 @@ def questao_9(caminho = "chagas2018.csv"):
     df = pd.read_csv(caminho)
     medias_e_desvios = dict()
     df["SG_UF_NOT"] = df["SG_UF_NOT"].replace(dicionario_estados)
-    df = df.astype({"DT_NOTIFIC": str, "DT_SIN_PRI": str})
+    df = df.astype({"DT_NOTIFIC": str, "DT_SIN_PRI": str}).copy()
     df["DT_NOTIFICACAO"] = pd.to_datetime(df["DT_NOTIFIC"])
     df["DT_SINTOMAS"] = pd.to_datetime(df["DT_SIN_PRI"])
     df["ATRASO_NOT"] = (df["DT_NOTIFICACAO"] - df["DT_SINTOMAS"]).dt.days
@@ -108,7 +108,7 @@ def questao_9(caminho = "chagas2018.csv"):
 
 def questao_10(caminho = "chagas2018.csv"):
     df = pd.read_csv(caminho)
-    df = df.astype({"DT_NOTIFIC": str, "DT_SIN_PRI": str})
+    df = df.astype({"DT_NOTIFIC": str, "DT_SIN_PRI": str}).copy()
     df["DT_NOTIFICACAO"] = pd.to_datetime(df["DT_NOTIFIC"])
     df["DT_SINTOMAS"] = pd.to_datetime(df["DT_SIN_PRI"])
     df["ATRASO_NOT"] = (df["DT_NOTIFICACAO"] - df["DT_SINTOMAS"]).dt.days
@@ -122,6 +122,7 @@ def questao_10(caminho = "chagas2018.csv"):
         title="Quantidade de Casos por Média de Atraso de Notificação por Município",
         xlabel="Número de Casos",
         ylabel = "Média de Atraso de Notificação",
-        color="red")
+        color="red"
+    )
     return media_atraso_mun
 
