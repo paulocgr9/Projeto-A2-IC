@@ -1,5 +1,4 @@
 import pandas as pd
-import matplotlib.pyplot as mp
 from pysus.preprocessing.decoders import decodifica_idade_SINAN
 
 AUTORES = ['Pedro Santos Tokar', 'Paulo César Gomes Rodrigues']
